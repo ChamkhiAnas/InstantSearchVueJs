@@ -75,7 +75,7 @@ export default {
     console.log("searchString",searchString)
 
      photos = photos.filter(function(item){
-      console.log(item)
+      // console.log(item)
       if(item.name.toLowerCase().indexOf(searchString) !== -1){
         return item;
       }
@@ -99,9 +99,18 @@ methods:{
     },
 
     removeTag:function(n){
-
-    this.tagArray.slice(n,1)
+    
+  
+    
+    this.tagArray.splice(n,1)
+    if (this.tagArray.length==0){
+      this.placeholder="Dans quelle pays ?";
+    }
+    else{
+      (console.log("merbouha"))
+    }
     console.log(this.tagArray,n)
+    console.log("length",this.tagArray.length)
 
     }
 

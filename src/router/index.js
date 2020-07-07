@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import About from "../views/About.vue";
+import InstantSearch from "../views/InstantSearch.vue";
 
 
 Vue.use(VueRouter);
@@ -14,9 +14,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/About',
-    name: 'About',
-    component: About
+    path: '/search',
+    name: 'search',
+    component: InstantSearch
   },
 
 ];
