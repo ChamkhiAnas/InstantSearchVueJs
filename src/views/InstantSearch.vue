@@ -16,12 +16,16 @@
       v-model="authorNameSearchString"
       @keyup.enter="add_tag"
       @keyup.delete="delete_last"
+      @keydown="write"
+      @keyup="write"
+
+
     >
   </div>
 
     <ul class="ullist">
       <li  class="itemcontain" v-for="photo in filteredPhotoFeed" v-bind:key="photo.id">
-      <span class="item" @click="getTag(photo.name)">{{ photo.name }}</span>
+      <span class="item" @click="getTag(photo.name)">{{photo.item.name}}</span>
       </li>
     </ul>
 
@@ -45,6 +49,7 @@ export default {
     tags:null,
     placeholder:"Dans quelle pays ?",
     tagArray:[],
+    listedcountries:[],
     };
   },
   mounted() {
@@ -52,7 +57,7 @@ export default {
     this.$http.get('https://restcountries.eu/rest/v2/all')
     .then(response => {
       this.photoFeed = response.data;
-      // console.log(response.data)
+      console.log(response.data)
     })
     .catch(error => console.log(error))
 },
@@ -61,26 +66,44 @@ export default {
 
   filteredPhotoFeed: function () {
 
+    /* eslint-disable no-unused-vars */
     var photos = this.photoFeed;
     var authorNameSearchString = this.authorNameSearchString;
-    var none=this.none
+    var none=this.none;
+    var listedc=this.listedcountries
+    
 
     if(!authorNameSearchString||authorNameSearchString.length<=1){
+
       return none;
+
     }
 
 
     /* eslint-disable no-unused-vars */
     var searchString = authorNameSearchString.trim().toLowerCase();
-    console.log("searchString",searchString)
+    // console.log("searchString",searchString)
 
-     photos = photos.filter(function(item){
-      // console.log(item)
+
+      
+      photos = photos.filter(function(item){
+      
       if(item.name.toLowerCase().indexOf(searchString) !== -1){
-        return item;
+        // console.log("index",item.name.toLowerCase().indexOf(searchString))
+        var indc=item.name.toLowerCase().indexOf(searchString)
+        listedc.push({item,indc})
+        return item
       }
     })
-    return photos;
+    console.log('---------------------------')
+    console.log("listedCountries",this.listedcountries)
+    listedc.sort(function (x, y) {
+    return x.indc - y.indc;
+    });
+    console.log('---------------------------')
+    console.log(this.listedcountries)
+    const map1 = listedc.map(x =>delete x.indc);
+    return listedc;
   }
 },
 methods:{
@@ -98,10 +121,7 @@ methods:{
       }
     },
 
-    removeTag:function(n){
-    
-  
-    
+    removeTag:function(n){  
     this.tagArray.splice(n,1)
     if (this.tagArray.length==0){
       this.placeholder="Dans quelle pays ?";
@@ -112,6 +132,12 @@ methods:{
     console.log(this.tagArray,n)
     console.log("length",this.tagArray.length)
 
+    },
+    write:function(){
+      console.log("clickiti")
+      this.listedcountries=[];
+      this.listedcountries.length = 0;
+      console.log("had tableau khas itm7A",this.listedcountries)
     }
 
 
