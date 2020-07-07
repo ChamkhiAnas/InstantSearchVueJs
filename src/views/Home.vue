@@ -144,6 +144,11 @@ methods:{
 
 <style scoped>
 
+textarea:focus, input:focus{
+    outline: none;
+}
+
+
 body {
   padding: 40px;
 }
