@@ -25,7 +25,7 @@
 
     <ul class="ullist">
       <li  class="itemcontain" v-for="photo in filteredPhotoFeed" v-bind:key="photo.id">
-      <span class="item" @click="getTag(photo.name)">{{photo.item.name}}</span>
+      <span class="item" @click="getTag(photo.item.name)">{{photo.item.name}}</span>
       </li>
     </ul>
 
@@ -86,7 +86,7 @@ export default {
 
 
       
-      photos = photos.filter(function(item){
+    photos = photos.filter(function(item){
       
       if(item.name.toLowerCase().indexOf(searchString) !== -1){
         // console.log("index",item.name.toLowerCase().indexOf(searchString))
@@ -95,7 +95,6 @@ export default {
         return item
       }
     })
-    console.log('---------------------------')
     console.log("listedCountries",this.listedcountries)
     listedc.sort(function (x, y) {
     return x.indc - y.indc;
