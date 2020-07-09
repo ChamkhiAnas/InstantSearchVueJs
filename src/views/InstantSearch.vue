@@ -54,10 +54,10 @@ export default {
   },
   mounted() {
   
-    this.$http.get('https://restcountries.eu/rest/v2/all')
+    this.$http.get('http://localhost:3000/locations')
     .then(response => {
       this.photoFeed = response.data;
-      console.log(response.data)
+      console.log(this.photoFeed)
     })
     .catch(error => console.log(error))
 },
@@ -95,14 +95,17 @@ export default {
         return item
       }
     })
-    console.log("listedCountries",this.listedcountries)
-    listedc.sort(function (x, y) {
-    return x.indc - y.indc;
-    });
-    console.log('---------------------------')
-    console.log(this.listedcountries)
-    const map1 = listedc.map(x =>delete x.indc);
-    return listedc;
+
+
+    return photos
+    // console.log("listedCountries",this.listedcountries)
+    // listedc.sort(function (x, y) {
+    // return x.indc - y.indc;
+    // });
+    // console.log('---------------------------')
+    // console.log(this.listedcountries)
+    // const map1 = listedc.map(x =>delete x.indc);
+    // return listedc;
   }
 },
 methods:{
