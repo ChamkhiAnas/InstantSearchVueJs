@@ -25,7 +25,7 @@
 
     <ul class="ullist">
       <li  class="itemcontain" v-for="photo in filteredPhotoFeed" v-bind:key="photo.id">
-      <span class="item" @click="getTag(photo.item.name)">{{photo.item.name}}</span>
+      <span class="item" @click="getTag(photo.item)">{{photo.item}}</span>
       </li>
     </ul>
 
@@ -47,7 +47,7 @@ export default {
     searchString:null,
     none:null,
     tags:null,
-    placeholder:"Dans quelle pays ?",
+    placeholder:"Dans quelle ville ?",
     tagArray:[],
     listedcountries:[],
     };
@@ -57,7 +57,7 @@ export default {
     this.$http.get('http://localhost:3000/locations')
     .then(response => {
       this.photoFeed = response.data;
-      console.log(this.photoFeed)
+      console.log("photos feed",this.photoFeed)
     })
     .catch(error => console.log(error))
 },
@@ -73,39 +73,36 @@ export default {
     var listedc=this.listedcountries
     
 
-    if(!authorNameSearchString||authorNameSearchString.length<=1){
+    if(!authorNameSearchString||authorNameSearchString.length<=2){
 
       return none;
 
     }
 
 
+    console.log("hahowa dkhal hnaya")
+
     /* eslint-disable no-unused-vars */
     var searchString = authorNameSearchString.trim().toLowerCase();
     // console.log("searchString",searchString)
 
-
-      
     photos = photos.filter(function(item){
       
-      if(item.name.toLowerCase().indexOf(searchString) !== -1){
+      if(item.toLowerCase().indexOf(searchString) !== -1){
         // console.log("index",item.name.toLowerCase().indexOf(searchString))
-        var indc=item.name.toLowerCase().indexOf(searchString)
+        var indc=item.toLowerCase().indexOf(searchString)
         listedc.push({item,indc})
-        return item
       }
     })
 
-
-    return photos
-    // console.log("listedCountries",this.listedcountries)
-    // listedc.sort(function (x, y) {
-    // return x.indc - y.indc;
-    // });
-    // console.log('---------------------------')
-    // console.log(this.listedcountries)
-    // const map1 = listedc.map(x =>delete x.indc);
-    // return listedc;
+    console.log("listedCountries",this.listedcountries)
+    listedc.sort(function (x, y) {
+    return x.indc - y.indc;
+    });
+    console.log('---------------------------')
+    console.log(this.listedcountries)
+    const map1 = listedc.map(x =>delete x.indc);
+    return listedc;
   }
 },
 methods:{
@@ -113,7 +110,7 @@ methods:{
     getTag:function(ab){
       this.tagArray.push(ab);
       this.authorNameSearchString = '';
-      this.placeholder = "Une Autre Pays ?";
+      this.placeholder = "Une Autre ville ?";
       },
 
 
@@ -126,7 +123,7 @@ methods:{
     removeTag:function(n){  
     this.tagArray.splice(n,1)
     if (this.tagArray.length==0){
-      this.placeholder="Dans quelle pays ?";
+      this.placeholder="Dans quelle ville ?";
     }
     else{
       (console.log("merbouha"))
@@ -136,10 +133,10 @@ methods:{
 
     },
     write:function(){
-      console.log("clickiti")
+      // console.log("clickiti")
       this.listedcountries=[];
       this.listedcountries.length = 0;
-      console.log("had tableau khas itm7A",this.listedcountries)
+      // console.log("had tableau khas itm7A",this.listedcountries)
     }
 
 
